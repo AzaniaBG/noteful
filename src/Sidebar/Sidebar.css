@@ -1,0 +1,13 @@
+.NotefulApp {
+    display: flex;
+    flex-flow: row;
+}
+.NotefulApp {
+    flex: 5 1 auto;
+}
+.Sidebar, .Folders {
+    flex: 1 5 auto;
+}
+.Notes_content {
+    margin: 0 auto;
+}
