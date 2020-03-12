@@ -7,17 +7,41 @@ import FoldersList from '../src/Folders/FoldersList';
 import Folder from '../src/Folders/Folder';
 import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
+import config from '../src/config';
 
 class App extends Component {
   
   constructor(props) {
     super(props)
+    // super(props)
+    // this.state = {
+    //   folders: DummyStore.folders,
+    //   notes: DummyStore.notes
+    // }
     this.state = {
-      folders: DummyStore.folders,
-      notes: DummyStore.notes
+      notes: [],
+      folders: []
     }
   }
   //implement fetch requests when the application mounts
+  componentDidMount() {
+    //ensure all async operations resolve before invoking success/failure calls 
+    Promise.all([
+      fetch(`${config.API_ENDPOINT}/folders`),
+      fetch(`${config.API_ENDPOINT}/notes`)
+
+    ]).then(([foldersRes, notesRes]) => {
+      if(!foldersRes.ok) {
+        return foldersRes.json().then(e => Promise.reject(e));
+      }
+      if(!notesRes.ok) {
+        return notesRes.json().then(e => Promise.reject(e));
+      }
+      return Promise.all([foldersRes.json(), notesRes.json()]);
+      }).then(([notes, folders]) => {
+        this.setState({notes, folders});
+      }).catch(error => console.log({error}))
+    }
   
   
   render() {
