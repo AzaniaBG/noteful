@@ -5,19 +5,13 @@ import NotesList from '../src/Notes/NotesList';
 import Note from '../src/Notes/Note';
 import FoldersList from '../src/Folders/FoldersList';
 import Folder from '../src/Folders/Folder';
-import DummyStore from './DummyStore.js';
+// import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
 
-class App extends Component {
-  
+class App extends Component { 
   constructor(props) {
     super(props)
-    // super(props)
-    // this.state = {
-    //   folders: DummyStore.folders,
-    //   notes: DummyStore.notes
-    // }
     this.state = {
       notes: [],
       folders: []
@@ -42,6 +36,12 @@ class App extends Component {
         this.setState({notes, folders});
       }).catch(error => console.log({error}))
     }
+    //create a method that updates state when a button in a nested component is clicked (updater function)
+    handleDeleteClick = (noteId) => {
+      this.setState({
+        notes: this.state.notes.filter((note) => note.id !== noteId)
+      })
+    }
   
   
   render() {
@@ -55,7 +55,8 @@ class App extends Component {
           <AppContext.Provider
             value={{
               folders: this.state.folders,
-              notes: this.state.notes
+              notes: this.state.notes,
+              handleDeleteClick: this.handleDeleteClick,
               }}>
 {/* list folders in sidebar */}
             <section className="Sidebar">
@@ -64,16 +65,9 @@ class App extends Component {
               </Route>
               <Route exact path="/folder/:id"
                 component={FoldersList} />
-              {/* <Route exact path="/folder/:id"
-                render={(routeProps) => 
-                <FoldersList folders={this.state.folders} /> } 
-                /> */}
               
   {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
-              {/* <Route exact path="/folder/:id"
-                render={(routeProps) => <FoldersList folders={this.state.folders.find(folder => folder.id === routeProps.match.params.id)} />} /> */}
-                {/* <FoldersList folders={this.state.folders} /> 
-              </Route> */}
+              
               <Route exact path="/note/:id"
                 render={({history}) => (
                   <Folder 
