@@ -27,8 +27,8 @@ class App extends Component {
   componentDidMount() {
     //ensure all async operations resolve before invoking success/failure calls 
     Promise.all([
-      fetch(`${config.API_ENDPOINT}/folders`),
-      fetch(`${config.API_ENDPOINT}/notes`)
+      fetch(`${config.API_ENDPOINT}/notes`),
+      fetch(`${config.API_ENDPOINT}/folders`)
 
     ]).then(([foldersRes, notesRes]) => {
       if(!foldersRes.ok) {
