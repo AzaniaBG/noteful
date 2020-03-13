@@ -8,6 +8,7 @@ import Folder from '../src/Folders/Folder';
 // import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
+import AddFolder from '../src/AddForms/AddFolder';
 
 class App extends Component { 
   constructor(props) {
@@ -43,10 +44,10 @@ class App extends Component {
       })
     }
   
-  
   render() {
        return (
         <div className="App">
+          
             <NavLink to="/">
               <h1 className="App-header">
               Noteful
@@ -58,6 +59,7 @@ class App extends Component {
               notes: this.state.notes,
               handleDeleteClick: this.handleDeleteClick,
               }}>
+              <AddFolder />
 {/* list folders in sidebar */}
             <section className="Sidebar">
               <Route exact path="/"

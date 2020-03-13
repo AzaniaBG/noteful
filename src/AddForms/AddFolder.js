@@ -1,5 +1,6 @@
 import React from 'react';
 import AppContext from '../Context/AppContext';
+import config from '../config';
 
 export default class AddFolder extends React.Component {
     static contextType = AppContext;
@@ -18,6 +19,12 @@ export default class AddFolder extends React.Component {
         event.preventDefault();
         const name = this.nameInput.current.value;
     console.log(`name from handleSubmit is:`, name)
+        fetch(`${config.API_ENDPOINT}/folders`, {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json",
+            }
+        })
     }
     // //add method to get value when add button is clicked and update state with new value
     // handleAddClick = (folderName) => {
