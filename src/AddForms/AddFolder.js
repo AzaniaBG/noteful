@@ -6,37 +6,36 @@ export default class AddFolder extends React.Component {
     static contextType = AppContext;
     constructor(props) {
         super(props)
-        // this.state = {
-        //    name: {
-        //        value: " ",
-        //        touched: false,
-        //    }
-        // }
-        this.nameInput = React.createRef();
+        this.state = {
+           "id": " ",
+           "name": " ",
+        }
+        //this.nameInput = React.createRef();
+    }
+    
+    //add method to get value when add button is clicked and update state with new value
+    handleAddClick = (folderName) => {
+    console.log(`event from handleAddClick ran`, folderName);
+        this.setState({
+            "id": " ",
+            "name": folderName,
+        })
     }
     //add method to process form values when submit button is clicked
     handleSubmit = (event) => {
         event.preventDefault();
-        const name = this.nameInput.current.value;
-    console.log(`name from handleSubmit is:`, name)
+        //const name = this.nameInput.current.value;
+        const { name, id } = this.state;
+        const newFolder = { id, name };
+    console.log(`newFolder from handleSubmit is:`, newFolder)
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
+            body: JSON.stringify(newFolder),
             headers: {
                 "content-type": "application/json",
             }
-        })
+        }).then((res) => res.json())
     }
-    // //add method to get value when add button is clicked and update state with new value
-    // handleAddClick = (folderName) => {
-    // console.log(`event from handleAddClick ran`, folderName);
-    //     this.setState({
-    //         name: {
-    //             value: folderName,
-    //             touched: true,
-    //         }
-
-    //     })
-    // }
     render() {
         return (
             <form className="AddFolder" onSubmit={(e) => this.handleSubmit(e)}>
@@ -47,8 +46,8 @@ export default class AddFolder extends React.Component {
                         id="newFolder" 
                         type="text" 
                         name="newFolder" 
-                        // onChange={(e) => this.handleAddClick(e.target.value)}
-                        ref={this.nameInput}
+                        onChange={(e) => this.handleAddClick(e.target.value)}
+                        //ref={this.nameInput}
                         // defaultValue="new folder"
                         className="AddFolder_control"  />
                     <button className="addFolderButton">Add Folder</button>
