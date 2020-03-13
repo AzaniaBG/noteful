@@ -1,8 +1,9 @@
 import React from 'react';
 import AppContext from '../Context/AppContext';
 import config from '../config';
+import { withRouter } from 'react-router-dom';
 
-export default class AddFolder extends React.Component {
+class AddFolder extends React.Component {
     static contextType = AppContext;
     constructor(props) {
         super(props)
@@ -20,6 +21,16 @@ export default class AddFolder extends React.Component {
             "name": folderName,
         })
     }
+    //add method to that adds user's new folder to folders already in state
+    // updateFolders = (newFolder) => {
+    //     let folders = this.context.folders;
+    // console.log(`upDateFolders context value`, folders)
+    //     //to avoid mutating state, use the spread operator to copy the folders array into a new array and add the new folder to the end of that array
+    //     this.setState({
+    //         folders: [...folders, newFolder]
+    //     })
+
+    // }
     //add method to process form values when submit button is clicked
     handleSubmit = (event) => {
         event.preventDefault();
@@ -27,8 +38,7 @@ export default class AddFolder extends React.Component {
         const { name } = this.state;
         const newFolder = { name };
     console.log(`newFolder from handleSubmit is:`, newFolder)
-    //     let folders = this.context.folders;
-    // console.log(`folders context value`, folders)
+    
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             body: JSON.stringify(newFolder),
@@ -46,6 +56,8 @@ export default class AddFolder extends React.Component {
                 "id": " ",
                 "name": " ",
             });
+            this.context.updateFolders(resJson);
+            this.props.history.push("/");
         }).catch((err) => console.log(err));
     }
     render() {
@@ -62,7 +74,10 @@ export default class AddFolder extends React.Component {
                         //ref={this.nameInput}
                         //defaultValue="new folder"
                         className="AddFolder_control"  />
-                    <button className="addFolderButton">Add Folder</button>
+                    <button className="addFolderButton" 
+                        onClick={(e) => this.context.updateFolders(e.target.value)}>
+                        Save Folder
+                    </button>
                 </div>
             </form>
         )
@@ -70,3 +85,4 @@ export default class AddFolder extends React.Component {
     }
 
 }
+export default withRouter(AddFolder)
