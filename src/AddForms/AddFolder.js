@@ -17,7 +17,6 @@ export default class AddFolder extends React.Component {
     handleAddClick = (folderName) => {
     console.log(`event from handleAddClick ran`, folderName);
         this.setState({
-            "id": " ",
             "name": folderName,
         })
     }
@@ -25,16 +24,29 @@ export default class AddFolder extends React.Component {
     handleSubmit = (event) => {
         event.preventDefault();
         //const name = this.nameInput.current.value;
-        const { name, id } = this.state;
-        const newFolder = { id, name };
+        const { name } = this.state;
+        const newFolder = { name };
     console.log(`newFolder from handleSubmit is:`, newFolder)
+    //     let folders = this.context.folders;
+    // console.log(`folders context value`, folders)
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             body: JSON.stringify(newFolder),
             headers: {
                 "content-type": "application/json",
             }
-        }).then((res) => res.json())
+        }).then(res => {
+            if(!res.ok) {
+                throw new Error("sump wrong");
+            }
+            return res.json();
+        }).then( resJson => {
+        console.log(`resJson is`, resJson)
+            this.setState({
+                "id": " ",
+                "name": " ",
+            });
+        }).catch((err) => console.log(err));
     }
     render() {
         return (
@@ -48,7 +60,7 @@ export default class AddFolder extends React.Component {
                         name="newFolder" 
                         onChange={(e) => this.handleAddClick(e.target.value)}
                         //ref={this.nameInput}
-                        // defaultValue="new folder"
+                        //defaultValue="new folder"
                         className="AddFolder_control"  />
                     <button className="addFolderButton">Add Folder</button>
                 </div>
