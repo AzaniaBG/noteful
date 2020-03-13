@@ -50,7 +50,7 @@ class App extends Component {
       let folders = this.state.folders;
       this.setState({
         folders: [...folders, newFolder]
-      });
+      })
     }
   
   render() {
