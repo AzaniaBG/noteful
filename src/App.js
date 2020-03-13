@@ -43,6 +43,15 @@ class App extends Component {
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
+    // handleAddFolderClick = () => {
+    //   console.log(`handleAddFolderClick ran`)
+    // }
+    updateFolders = (newFolder) => {
+      let folders = this.state.folders;
+      this.setState({
+        folders: [...folders, newFolder]
+      });
+    }
   
   render() {
        return (
@@ -58,8 +67,9 @@ class App extends Component {
               folders: this.state.folders,
               notes: this.state.notes,
               handleDeleteClick: this.handleDeleteClick,
+              // handleAddFolderClick: this.handleAddFolderClick,
+              updateFolders: this.updateFolders,
               }}>
-              <AddFolder />
 {/* list folders in sidebar */}
             <section className="Sidebar">
               <Route exact path="/"
@@ -75,8 +85,14 @@ class App extends Component {
                   <Folder 
                     onBackClick={() => history.goBack() }
                     /> 
-                    )}
-              />
+                    )}/>
+              <Route exact path="/addFolder" 
+                // component={AddFolder} 
+                render={({history}) => (
+                  <AddFolder
+                    handleAddFolderClick={() => history.push('/addFolder')} />
+                )}
+                />
             </section>
             
             <section className="Main">
