@@ -54,12 +54,18 @@ class App extends Component {
         folders: [...folders, newFolder]
       })
     }
-
-    // handleAddNoteClick = (folderId) => {
-    //   // console.log(`handleAddNoteClick from App.js ran`);
-    //   console.log(`folderId is`, folderId)
-    //   return folderId;
-    // }
+    updateNotes = (newNote) => {
+      let notes = this.state.notes;
+      this.setState({
+        notes: [...notes, newNote]
+      })
+    }
+    //get folder Id from Component with addNote button
+    handleAddNoteClick = (folderId) => {
+      // console.log(`handleAddNoteClick from App.js ran`);
+      console.log(`folderId from App is`, folderId)
+      return folderId;
+    }
     //create a method that updates notes state when a button in a nested component is clicked
 
   render() {
@@ -77,6 +83,7 @@ class App extends Component {
               handleDeleteClick: this.handleDeleteClick,
               updateFolders: this.updateFolders,
               handleAddNoteClick: this.handleAddNoteClick,
+              updateNotes: this.updateNotes,
               }}>
 {/* list folders in sidebar */}
             <section className="Sidebar">
@@ -94,11 +101,11 @@ class App extends Component {
                     /> 
                     )}/>
               <Route exact path="/addFolder" 
-                // component={AddFolder} 
-                  render={({history}) => (
-                    <AddFolder
-                      handleAddFolderClick={() => history.push('/addFolder')} />
-                  )}
+                component={AddFolder} 
+                  // render={({history}) => (
+                  //   <AddFolder
+                  //     handleAddNoteClick={() => history.push('/addFolder')} />
+                  // )}
                 />
             </section>
             
@@ -109,13 +116,13 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
-              {/* <Route exact path="/addNote"
-                render={() => (
-                  <AddNote 
-                    handleAddNoteClick={(folderId) => this.handleAddNoteClick(folderId)} />
-                )} /> */}
               <Route exact path="/addNote"
-                component={AddNote} />
+                render={({history}) => (
+                  <AddNote 
+                    handleAddNoteClick={() => history.push('/addNote')} />
+                )} />
+              {/* <Route exact path="/addNote"
+                component={AddNote} /> */}
             </section>
           </AppContext.Provider>
         </div>
