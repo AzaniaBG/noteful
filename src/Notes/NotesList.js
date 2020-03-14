@@ -28,8 +28,7 @@ class NotesList extends React.Component {
                         <NavLink to={`/note/${note.id}`}>{note.name}</NavLink>
                     </h3>
                     <p>Modified: {note.modified}</p>
-                    <button id="addButton" 
-                        onClick={() => this.context.handleAddNoteClick(folderId)}>
+                    <button id="addButton" >
                         <NavLink to="/addNote">
                         Add Note
                         </NavLink>

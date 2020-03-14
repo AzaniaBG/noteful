@@ -39,6 +39,7 @@ class App extends Component {
       }).catch(error => console.log({error}))
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
+    //********************should probably change name to "updateNotes"**********************
     handleDeleteClick = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
@@ -54,10 +55,11 @@ class App extends Component {
       })
     }
 
-    handleAddNoteClick = (folderId) => {
-      console.log(`handleAddNoteClick from App.js ran`);
-      console.log(`folderId is`, folderId)
-    }
+    // handleAddNoteClick = (folderId) => {
+    //   // console.log(`handleAddNoteClick from App.js ran`);
+    //   console.log(`folderId is`, folderId)
+    //   return folderId;
+    // }
     //create a method that updates notes state when a button in a nested component is clicked
 
   render() {
@@ -107,13 +109,13 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
-              <Route exact path="/addNote"
-                render={({history}) => (
-                  <AddNote 
-                    handleAddNoteClick={() => history.push("/addNote")} />
-                )} />
               {/* <Route exact path="/addNote"
-                component={AddNote} /> */}
+                render={() => (
+                  <AddNote 
+                    handleAddNoteClick={(folderId) => this.handleAddNoteClick(folderId)} />
+                )} /> */}
+              <Route exact path="/addNote"
+                component={AddNote} />
             </section>
           </AppContext.Provider>
         </div>
