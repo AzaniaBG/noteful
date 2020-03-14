@@ -9,6 +9,7 @@ import Folder from '../src/Folders/Folder';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
+import AddNote from '../src/AddForms/AddNote';
 
 class App extends Component { 
   constructor(props) {
@@ -37,7 +38,7 @@ class App extends Component {
         this.setState({notes, folders});
       }).catch(error => console.log({error}))
     }
-    //create a method that updates state when a button in a nested component is clicked (updater function)
+    //create a method that updates folders state when a button in a nested component is clicked (updater function)
     handleDeleteClick = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
@@ -52,11 +53,16 @@ class App extends Component {
         folders: [...folders, newFolder]
       })
     }
-  
+
+    handleAddNoteClick = (folderId) => {
+      console.log(`handleAddNoteClick from App.js ran`);
+      console.log(`folderId is`, folderId)
+    }
+    //create a method that updates notes state when a button in a nested component is clicked
+
   render() {
        return (
         <div className="App">
-          
             <NavLink to="/">
               <h1 className="App-header">
               Noteful
@@ -67,8 +73,8 @@ class App extends Component {
               folders: this.state.folders,
               notes: this.state.notes,
               handleDeleteClick: this.handleDeleteClick,
-              // handleAddFolderClick: this.handleAddFolderClick,
               updateFolders: this.updateFolders,
+              handleAddNoteClick: this.handleAddNoteClick,
               }}>
 {/* list folders in sidebar */}
             <section className="Sidebar">
@@ -77,7 +83,6 @@ class App extends Component {
               </Route>
               <Route exact path="/folder/:id"
                 component={FoldersList} />
-              
   {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
               
               <Route exact path="/note/:id"
@@ -88,10 +93,10 @@ class App extends Component {
                     )}/>
               <Route exact path="/addFolder" 
                 // component={AddFolder} 
-                render={({history}) => (
-                  <AddFolder
-                    handleAddFolderClick={() => history.push('/addFolder')} />
-                )}
+                  render={({history}) => (
+                    <AddFolder
+                      handleAddFolderClick={() => history.push('/addFolder')} />
+                  )}
                 />
             </section>
             
@@ -102,6 +107,13 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
+              <Route exact path="/addNote"
+                render={({history}) => (
+                  <AddNote 
+                    handleAddNoteClick={() => history.push("/addNote")} />
+                )} />
+              {/* <Route exact path="/addNote"
+                component={AddNote} /> */}
             </section>
           </AppContext.Provider>
         </div>
