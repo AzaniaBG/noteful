@@ -8,6 +8,8 @@ import Folder from '../src/Folders/Folder';
 // import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
+import AddFolder from '../src/AddForms/AddFolder';
+import AddNote from '../src/AddForms/AddNote';
 
 class App extends Component { 
   constructor(props) {
@@ -36,15 +38,32 @@ class App extends Component {
         this.setState({notes, folders});
       }).catch(error => console.log({error}))
     }
-    //create a method that updates state when a button in a nested component is clicked (updater function)
+    //create a method that updates folders state when a button in a nested component is clicked (updater function)
+    //********************should probably change name to "updateNotes"**********************
     handleDeleteClick = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
-  
-  
+    // handleAddFolderClick = () => {
+    //   console.log(`handleAddFolderClick ran`)
+    // }
+    updateFolders = (newFolder) => {
+      let folders = this.state.folders;
+      this.setState({
+        folders: [...folders, newFolder]
+      })
+    }
+    //create a method that updates notes state when a button in a nested component is clicked
+    updateNotes = (newNote) => {
+      let notes = this.state.notes;
+      this.setState({
+        notes: [...notes, newNote]
+      })
+    }
+
   render() {
+    
        return (
         <div className="App">
             <NavLink to="/">
@@ -57,6 +76,9 @@ class App extends Component {
               folders: this.state.folders,
               notes: this.state.notes,
               handleDeleteClick: this.handleDeleteClick,
+              updateFolders: this.updateFolders,
+              handleAddNoteClick: this.handleAddNoteClick,
+              updateNotes: this.updateNotes,
               }}>
 {/* list folders in sidebar */}
             <section className="Sidebar">
@@ -65,7 +87,6 @@ class App extends Component {
               </Route>
               <Route exact path="/folder/:id"
                 component={FoldersList} />
-              
   {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
               
               <Route exact path="/note/:id"
@@ -73,8 +94,9 @@ class App extends Component {
                   <Folder 
                     onBackClick={() => history.goBack() }
                     /> 
-                    )}
-              />
+                    )}/>
+              <Route exact path="/addFolder" 
+                component={AddFolder} />
             </section>
             
             <section className="Main">
@@ -84,6 +106,13 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
+              <Route exact path="/addNote/:folderId"
+                render={({history}) => (
+                  <AddNote 
+                    handleAddNoteClick={() => history.push('/addNote/:folderId')} />
+                )} />
+              {/* <Route exact path="/addNote"
+                component={AddNote} /> */}
             </section>
           </AppContext.Provider>
         </div>

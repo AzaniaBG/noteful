@@ -20,7 +20,11 @@ class FoldersList extends React.Component {
             
             <div>
                 {folders}
-                <button id="addFolder">Add Folder</button>
+                <button id="addFolder" >
+                    <NavLink to={"/addFolder"}>
+                    Add Folder
+                    </NavLink>
+                </button>
             </div>
         )
     }
