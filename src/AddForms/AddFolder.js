@@ -16,7 +16,7 @@ class AddFolder extends React.Component {
     
     //add method to get value when add button is clicked and update state with new value
     handleAddClick = (folderName) => {
-    console.log(`event from handleAddClick ran`, folderName);
+    // console.log(`event from handleAddClick ran`, folderName);
         this.setState({
             "name": folderName,
         })

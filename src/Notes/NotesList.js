@@ -29,7 +29,7 @@ class NotesList extends React.Component {
                     </h3>
                     <p>Modified: {note.modified}</p>
                     <button id="addButton" >
-                        <NavLink to="/addNote">
+                        <NavLink to="/addNote" onClick={() => this.context.handleAddNoteClick(folderId)}>
                         Add Note
                         </NavLink>
                     </button>
