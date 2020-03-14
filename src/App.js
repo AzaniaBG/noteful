@@ -54,21 +54,16 @@ class App extends Component {
         folders: [...folders, newFolder]
       })
     }
+    //create a method that updates notes state when a button in a nested component is clicked
     updateNotes = (newNote) => {
       let notes = this.state.notes;
       this.setState({
         notes: [...notes, newNote]
       })
     }
-    //get folder Id from Component with addNote button
-    handleAddNoteClick = (folderId) => {
-      // console.log(`handleAddNoteClick from App.js ran`);
-      console.log(`folderId from App is`, folderId)
-      return folderId;
-    }
-    //create a method that updates notes state when a button in a nested component is clicked
 
   render() {
+    
        return (
         <div className="App">
             <NavLink to="/">
@@ -101,12 +96,7 @@ class App extends Component {
                     /> 
                     )}/>
               <Route exact path="/addFolder" 
-                component={AddFolder} 
-                  // render={({history}) => (
-                  //   <AddFolder
-                  //     handleAddNoteClick={() => history.push('/addFolder')} />
-                  // )}
-                />
+                component={AddFolder} />
             </section>
             
             <section className="Main">
@@ -116,10 +106,10 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
-              <Route exact path="/addNote"
+              <Route exact path="/addNote/:folderId"
                 render={({history}) => (
                   <AddNote 
-                    handleAddNoteClick={() => history.push('/addNote')} />
+                    handleAddNoteClick={() => history.push('/addNote/:folderId')} />
                 )} />
               {/* <Route exact path="/addNote"
                 component={AddNote} /> */}

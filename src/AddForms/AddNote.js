@@ -9,18 +9,20 @@ class AddNote extends React.Component {
    
     constructor(props) {
         super(props);     
-    console.log(`route params from AddNote:`, this.props.match.params.id)
+        const folderId = this.props.match.params.folderId;
+    // console.log(`route params from AddNote:`, this.props.match.params.folderId)
         this.state = {
             "name": " ",
             "content": " ",
-            "folder": " ",
+            "folderId": folderId,
             "value": " ",
             "touched": false,
         }
     }
+    
+    
     //method gets user input for note name
     addNote = (name) => {
-        //console.log(`handleAddNoteClick ran`)
         this.setState({
             "touched": true,
             "name": name,
@@ -39,8 +41,8 @@ class AddNote extends React.Component {
         //prevent default submission triggered by onSubmit handler
         e.preventDefault();
         //destruct state and save in a variable to be passed in the REQUEST body
-        const { name, content } = this.state;
-        const newNote = { name, content };
+        const { name, folderId, content } = this.state;
+        const newNote = { name, folderId, content };
         //send POST REQUEST to notes server endpoint to add new note from user
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: 'POST',
@@ -59,7 +61,7 @@ class AddNote extends React.Component {
             this.setState({
                 "name": " ",
                 "content": " ",
-                "folder": " ",
+                "folderId": " ",
                 "value": " ",
                 "touched": false,
             });
@@ -81,6 +83,7 @@ class AddNote extends React.Component {
 
     }
     render() {
+        
         const nameError = this.validateNameInput();
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
