@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import config from '../config';
+import ValidationMessage from './ValidationMessage';
 
 class AddNote extends React.Component {
     static contextType = AppContext; 
@@ -19,7 +20,7 @@ class AddNote extends React.Component {
     }
     //method gets user input for note name
     addNote = (name) => {
-        console.log(`handleAddNoteClick ran`)
+        //console.log(`handleAddNoteClick ran`)
         this.setState({
             "touched": true,
             "name": name,
@@ -67,11 +68,20 @@ class AddNote extends React.Component {
             //programmatically navigate back to home page after new note successfully saved
             this.props.history.push('/');
         }).catch((err) => console.log(err))
+        //create method to provide validation message if applicable:
+        
+    }
+    validateNameInput = () => {
+        //get value of input and save in variable
+        const name = this.state.name.trim();
+        //console.log(`name from validateName`, name)
+        if(name === "") {
+            return "Note name is required";
+        }
 
     }
-    
     render() {
-        
+        const nameError = this.validateNameInput();
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
                     <fieldset>
@@ -82,13 +92,23 @@ class AddNote extends React.Component {
                         type="text"
                         name="newNote"
                         onChange={(e) => this.addNote(e.target.value)} />
+                    <div className="validationMessage" style={{color: "red" }}>
+                        {/* {this.state.name.touched &&  { nameError }  } */}
+                        {/* {<ValidationMessage message={this.validateNameInput()} />} */}
+                        {<ValidationMessage message={nameError} />} 
+                        {/* {nameError} */}
+                    </div>
                     <label htmlFor="noteContent">New Note Content</label>
                     <textarea 
                         id="noteContent"
                         type="text"
                         onChange={(e) => this.addContent(e.target.value)} />
 
-                    <button className="addFolderButton" 
+                    <button className="addNoteButton" 
+                        type="submit"
+                        disabled={
+                            this.validateNameInput()
+                        }
                         // onClick={(e) => this.context.updateNote(e.target.value)}
                         >
                         Save Note
