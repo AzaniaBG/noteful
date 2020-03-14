@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 
 class AddNote extends React.Component {
@@ -7,8 +7,8 @@ class AddNote extends React.Component {
 
     constructor(props) {
         super(props);
-        const folderPath = this.props.match.params.id;
-    console.log(`folderPath from AddNote is`, folderPath)
+    //     const folderPath = this.props.match.params.id;
+    // console.log(`folderPath from AddNote is`, folderPath)
         this.state = {
             "name": " ",
             "content": " ",
@@ -18,14 +18,12 @@ class AddNote extends React.Component {
 
     render() {
         return (
-            // <NavLink to="/addNote">
                 <form className="AddNote">
                     <h2>Add Note</h2>
                     <input name="defaultName" />
 
 
                 </form>
-            // </NavLink>
         )
     }
 }
