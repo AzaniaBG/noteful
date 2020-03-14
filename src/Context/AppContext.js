@@ -9,6 +9,7 @@ const AppContext = React.createContext({
     handleAddFolderClick: () => {},
     updateFolders: () => {}, 
     handleAddNoteClick: () => {},
+    updateNotes: () => {},
 });
 
 export default AppContext;
