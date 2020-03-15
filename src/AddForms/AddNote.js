@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import config from '../config';
 import ValidationMessage from './ValidationMessage';
+import PropTypes from 'prop-types';
 
 class AddNote extends React.Component {
     static contextType = AppContext; 
@@ -19,7 +20,6 @@ class AddNote extends React.Component {
             "touched": false,
         }
     }
-    
     
     //method gets user input for note name
     addNote = (name) => {
@@ -106,7 +106,6 @@ class AddNote extends React.Component {
                         id="noteContent"
                         type="text"
                         onChange={(e) => this.addContent(e.target.value)} />
-
                     <button className="addNoteButton" 
                         type="submit"
                         disabled={
@@ -121,5 +120,19 @@ class AddNote extends React.Component {
         )
     }
 }
-
+    AddNote.propTypes = {
+        name: (props, propName, AddNote) => {
+            const prop = props[propName];
+            //return error if the prop value is an empty string/blank space
+            if(prop === " ") {
+                return new Error(`${propName} cannot be blank in ${AddNote}. Validation failed.`);
+            }
+            if(typeof prop != "string") {
+                return new Error(`Invalid prop type. ${propName} must be a string in ${AddNote}. Validation failed.`);
+            }
+            if(prop <= 1 || prop > 20) {
+                return new Error(`Invalid prop length. ${propName} must be more than character and no more than 20 characters in ${AddNote}. Validation failed.`);
+            }
+        }
+    }
 export default withRouter(AddNote)
