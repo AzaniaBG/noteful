@@ -13,6 +13,7 @@ import AddNote from '../src/AddForms/AddNote';
 import ErrorBoundary from '../src/ErrorBoundaries/ErrorBoundary';
 
 class App extends Component { 
+  static getDerivedStateFromError = ErrorBoundary 
   constructor(props) {
     super(props)
     this.state = {
@@ -72,7 +73,6 @@ class App extends Component {
               Noteful
               </h1>
             </NavLink>
-          <ErrorBoundary>
             <AppContext.Provider
               value={{
                 folders: this.state.folders,
@@ -117,7 +117,6 @@ class App extends Component {
                   component={AddNote} /> */}
               </section>
             </AppContext.Provider>
-          </ErrorBoundary>
         </div>
       
     );
