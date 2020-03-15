@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import config from '../config';
 import ValidationMessage from './ValidationMessage';
-//import PropTypes from 'prop-types';
 
 class AddNote extends React.Component {
     static contextType = AppContext; 

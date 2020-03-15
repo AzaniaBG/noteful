@@ -11,8 +11,13 @@ import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
 import AddNote from '../src/AddForms/AddNote';
 import ErrorBoundary from '../src/ErrorBoundaries/ErrorBoundary';
+import PropTypes from 'prop-types';
 
 class App extends Component { 
+  static defaultProps = {
+    notes: [],
+    folders: [],
+  }
   constructor(props) {
     super(props)
     this.state = {
@@ -53,7 +58,8 @@ class App extends Component {
       let folders = this.state.folders;
       this.setState({
         folders: [...folders, newFolder]
-      })
+      });
+      
     }
     //create a method that updates notes state when a button in a nested component is clicked
     updateNotes = (newNote) => {
