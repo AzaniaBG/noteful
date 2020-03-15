@@ -1,13 +1,12 @@
 import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
+import PropTypes from 'prop-types';
 
 class NotesList extends React.Component {
 
     static contextType = AppContext;
-
-    render() {   
-       
+    render() {     
         let noteName;
         const folderId = this.props.match.params.id;
     //console.log(`folderId from NotesList is ${folderId}`);
@@ -42,7 +41,9 @@ class NotesList extends React.Component {
             </div>
         )
     }
-
+}
+NotesList.propTypes = {
+    NotesList: PropTypes.arrayOf(PropTypes.object)
 }
 export default withRouter(NotesList)
 

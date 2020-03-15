@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
+import PropTypes from 'prop-types';
 
 class FoldersList extends React.Component {
 
@@ -10,7 +11,7 @@ class FoldersList extends React.Component {
         const folderPath = this.props.match.params.id;
         const folders = this.context.folders.map((folder) => (
                 
-                <h3 key={folder.id} style={folderPath === folder.id ? {backgroundColor: "lightblue"} : {}}>
+                <h3 key={folder.id} id={folder.id} style={folderPath === folder.id ? {backgroundColor: "lightblue"} : {}}>
                     <NavLink to={`/folder/${folder.id}`}>
                     {folder.name}
                     </NavLink>
@@ -28,6 +29,9 @@ class FoldersList extends React.Component {
             </div>
         )
     }
+}
+FoldersList.propTypes = {
+    FoldersList: PropTypes.arrayOf(PropTypes.object)
 }
 export default withRouter(FoldersList)
 

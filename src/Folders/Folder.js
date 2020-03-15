@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
+import PropTypes from 'prop-types';
 
 class Folder extends React.Component {
 
@@ -28,5 +29,10 @@ class Folder extends React.Component {
         )
     }
 }
-
+Folder.propTypes = {
+    folder: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.Important
+    }))
+}
 export default withRouter(Folder)

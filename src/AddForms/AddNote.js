@@ -20,7 +20,6 @@ class AddNote extends React.Component {
         }
     }
     
-    
     //method gets user input for note name
     addNote = (name) => {
         this.setState({
@@ -106,7 +105,6 @@ class AddNote extends React.Component {
                         id="noteContent"
                         type="text"
                         onChange={(e) => this.addContent(e.target.value)} />
-
                     <button className="addNoteButton" 
                         type="submit"
                         disabled={
