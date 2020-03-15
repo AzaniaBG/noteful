@@ -2,6 +2,7 @@ import React from 'react';
 import AppContext from '../Context/AppContext';
 import config from '../config';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class AddFolder extends React.Component {
     static contextType = AppContext;
@@ -19,6 +20,7 @@ class AddFolder extends React.Component {
     // console.log(`event from handleAddClick ran`, folderName);
         this.setState({
             "name": folderName,
+            "id": " ",
         })
     }
     //add method to that adds user's new folder to folders already in state
@@ -37,8 +39,10 @@ class AddFolder extends React.Component {
         //const name = this.nameInput.current.value;
         const { name } = this.state;
         const newFolder = { name };
-    console.log(`newFolder from handleSubmit is:`, newFolder)
-    
+        
+        newFolder.propTypes = {
+            newFolder: PropTypes.object
+        }
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             body: JSON.stringify(newFolder),
@@ -51,7 +55,7 @@ class AddFolder extends React.Component {
             }
             return res.json();
         }).then( resJson => {
-        console.log(`resJson is`, resJson)
+        //console.log(`resJson is`, resJson)
             this.setState({
                 "id": " ",
                 "name": " ",

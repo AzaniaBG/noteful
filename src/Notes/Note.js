@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import config from '../config';
+import PropTypes from 'prop-types';
 
 class Note extends React.Component {
     static contextType = AppContext;
@@ -44,5 +45,9 @@ class Note extends React.Component {
         )
     }
 }
-
+Note.propTypes = {
+    name: PropTypes.string.isRequired,
+    id: PropTypes.isRequired,
+    content: PropTypes.string
+}
 export default withRouter(Note)
