@@ -10,6 +10,7 @@ import AppContext from './Context/AppContext';
 import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
 import AddNote from '../src/AddForms/AddNote';
+import ErrorBoundary from '../src/ErrorBoundaries/ErrorBoundary';
 
 class App extends Component { 
   constructor(props) {
@@ -71,50 +72,52 @@ class App extends Component {
               Noteful
               </h1>
             </NavLink>
-          <AppContext.Provider
-            value={{
-              folders: this.state.folders,
-              notes: this.state.notes,
-              handleDeleteClick: this.handleDeleteClick,
-              updateFolders: this.updateFolders,
-              handleAddNoteClick: this.handleAddNoteClick,
-              updateNotes: this.updateNotes,
-              }}>
-{/* list folders in sidebar */}
-            <section className="Sidebar">
-              <Route exact path="/"
-                component={FoldersList}>
-              </Route>
-              <Route exact path="/folder/:id"
-                component={FoldersList} />
-  {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
+          <ErrorBoundary>
+            <AppContext.Provider
+              value={{
+                folders: this.state.folders,
+                notes: this.state.notes,
+                handleDeleteClick: this.handleDeleteClick,
+                updateFolders: this.updateFolders,
+                handleAddNoteClick: this.handleAddNoteClick,
+                updateNotes: this.updateNotes,
+                }}>
+  {/* list folders in sidebar */}
+              <section className="Sidebar">
+                <Route exact path="/"
+                  component={FoldersList}>
+                </Route>
+                <Route exact path="/folder/:id"
+                  component={FoldersList} />
+    {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
+                
+                <Route exact path="/note/:id"
+                  render={({history}) => (
+                    <Folder 
+                      onBackClick={() => history.goBack() }
+                      /> 
+                      )}/>
+                <Route exact path="/addFolder" 
+                  component={AddFolder} />
+              </section>
               
-              <Route exact path="/note/:id"
-                render={({history}) => (
-                  <Folder 
-                    onBackClick={() => history.goBack() }
-                    /> 
-                    )}/>
-              <Route exact path="/addFolder" 
-                component={AddFolder} />
-            </section>
-            
-            <section className="Main">
-              <Route exact path="/" 
-                component={NotesList} />
-              <Route exact path="/folder/:id"
-                component={NotesList} />
-              <Route exact path="/note/:id" 
-                component={Note} />
-              <Route exact path="/addNote/:folderId"
-                render={({history}) => (
-                  <AddNote 
-                    handleAddNoteClick={() => history.push('/addNote/:folderId')} />
-                )} />
-              {/* <Route exact path="/addNote"
-                component={AddNote} /> */}
-            </section>
-          </AppContext.Provider>
+              <section className="Main">
+                <Route exact path="/" 
+                  component={NotesList} />
+                <Route exact path="/folder/:id"
+                  component={NotesList} />
+                <Route exact path="/note/:id" 
+                  component={Note} />
+                <Route exact path="/addNote/:folderId"
+                  render={({history}) => (
+                    <AddNote 
+                      handleAddNoteClick={() => history.push('/addNote/:folderId')} />
+                  )} />
+                {/* <Route exact path="/addNote"
+                  component={AddNote} /> */}
+              </section>
+            </AppContext.Provider>
+          </ErrorBoundary>
         </div>
       
     );
