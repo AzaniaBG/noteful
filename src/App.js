@@ -90,21 +90,23 @@ class App extends Component {
                 }}>
   {/* list folders in sidebar */}
               <section className="Sidebar">
-                <Route exact path="/"
-                  component={FoldersList}>
-                </Route>
-                <Route exact path="/folder/:id"
-                  component={FoldersList} />
-    {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
-                
-                <Route exact path="/note/:id"
-                  render={({history}) => (
-                    <Folder 
-                      onBackClick={() => history.goBack() }
-                      /> 
-                      )}/>
-                <Route exact path="/addFolder" 
-                  component={AddFolder} />
+                <ErrorBoundary>
+                  <Route exact path="/"
+                    component={FoldersList}>
+                  </Route>
+                  <Route exact path="/folder/:id"
+                    component={FoldersList} />
+      {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
+                  
+                  <Route exact path="/note/:id"
+                    render={({history}) => (
+                      <Folder 
+                        onBackClick={() => history.goBack() }
+                        /> 
+                        )}/>
+                  <Route exact path="/addFolder" 
+                    component={AddFolder} />
+                </ErrorBoundary>
               </section>
               
               <section className="Main">
