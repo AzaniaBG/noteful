@@ -11,7 +11,7 @@ export default class ErrorBoundary extends React.Component {
 
     }
     //create error boundary that displays UI re error to user (may help user understand error)
-    getDerivedStateFromError(error) {
+    static getDerivedStateFromError(error) {
         return { hasError: true };
     }
 
