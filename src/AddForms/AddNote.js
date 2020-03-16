@@ -93,6 +93,7 @@ class AddNote extends React.Component {
                         id="newNote"
                         type="text"
                         name="newNote"
+                        aria-required="true"
                         onChange={(e) => this.addNote(e.target.value)} />
                     <div className="validationMessage" style={{color: "red" }}>
                         {/* {this.state.name.touched &&  { nameError }  } */}
