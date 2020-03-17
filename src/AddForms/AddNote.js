@@ -20,7 +20,6 @@ class AddNote extends React.Component {
         }
     }
     
-    
     //method gets user input for note name
     addNote = (name) => {
         this.setState({
@@ -83,7 +82,6 @@ class AddNote extends React.Component {
 
     }
     render() {
-        
         const nameError = this.validateNameInput();
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
@@ -95,10 +93,12 @@ class AddNote extends React.Component {
                         type="text"
                         name="newNote"
                         onChange={(e) => this.addNote(e.target.value)} />
-                    <div className="validationMessage" style={{color: "red" }}>
+                    <div className="validationMessage"  >
                         {/* {this.state.name.touched &&  { nameError }  } */}
+                        {this.state.touched && (
+                            <ValidationMessage message={nameError} />
+                        )}
                         {/* {<ValidationMessage message={this.validateNameInput()} />} */}
-                        {<ValidationMessage message={nameError} />} 
                         {/* {nameError} */}
                     </div>
                     <label htmlFor="noteContent">New Note Content</label>

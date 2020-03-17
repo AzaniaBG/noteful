@@ -21,3 +21,6 @@
 .highlighted {
   background-color: lightskyblue;
 }
+.errorMessage {
+  color: red;
+}
