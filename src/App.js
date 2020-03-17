@@ -112,6 +112,8 @@ class App extends Component {
               <section className="Main">
                 <Route exact path="/" 
                   component={NotesList} />
+                <Route exact path="/addNote"
+                  component={AddNote} />
                 <Route exact path="/folder/:id"
                   component={NotesList} />
                 <Route exact path="/note/:id" 
