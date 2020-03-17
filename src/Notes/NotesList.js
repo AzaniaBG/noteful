@@ -37,6 +37,12 @@ class NotesList extends React.Component {
             }
         return (
             <div className="Main">
+                <button id="addButton2">
+                    <NavLink to={"/addNote"}>
+                    Add Note
+                    </NavLink>
+                </button>
+                
                 {noteName} 
             </div>
         )
