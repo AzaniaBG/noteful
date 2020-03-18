@@ -20,16 +20,26 @@ class AddNote extends React.Component {
     }
     
     //method gets user input for note name
-    addNote = (name, folder) => {
+    addNote = (name) => {
         this.setState({
             "touched": true,
             "name": name,
-            "folder": folder,
         })
+    }
+    //method gets user input for folder name
+    addFolder = (folderInput) => {
+    console.log(`folder from AddFolder is`, folderInput);
+        const folderOption = folderInput
+        //return the folder that matches the folder user selected
+        const folder = this.context.folders.filter((folder) => folder.name === folderOption);
+        const folderId = folder[0].id
+    console.log(`folderId is:`, folderId)
+        this.setState({ "folderId": folderId})
+
     }
     //method gets user input for note content
     addContent = (content) => {
-        console.log(`addContent ran`)
+        // console.log(`addContent ran`)
         this.setState({
             "touched": true,
             "content": content,
@@ -74,19 +84,26 @@ class AddNote extends React.Component {
     validateNameInput = () => {
         //get value of input and save in variable
         const name = this.state.name.trim();
+        const folder = this.state.folder;
         if(name === "" || name === " ") {
             return "Note name is required";
         }
         if(name.length <= 1 || name.length > 20) {
             return "Note name must be more than one character and no more than 20!";
         }
+        if(folder === null || folder === " ") {
+            return "Please choose a folder";
+        }
 
     }
     render() {
         const nameError = this.validateNameInput();
-        const folderNames = this.context.folders.map((folder) => <option name={folder.name} key={folder.id} id={folder.id} value={folder.name}>{folder.name}</option>
-        )
-        console.log(`folderName from AddNote is`, folderNames)
+        // const folderNames = this.context.folders.map((folder) => <option name={folder.name} key={folder.id} id={folder.id} value={folder.name}>{folder.name}</option>)
+        const folders = this.context.folders; 
+        const folderOptions = folders.map((folder) => <option name={folder.name} value={folder.name} key={folder.id} id={folder.id}>{folder.name}</option>);
+        
+        
+        // console.log(`folderName from AddNote is`, folderNames)
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
                     <fieldset>
@@ -94,9 +111,11 @@ class AddNote extends React.Component {
                     <label htmlFor="folder">Folder</label>
                     <select
                         id="folder"
-                        type="select" >
-                        <option name="choose a folder">choose a folder</option>
-                        {folderNames}
+                        type="select" 
+                        onChange={(e) => this.addFolder(e.target.value)}>
+                        <option name="None" value={null}>choose a folder</option>
+                        {/* {folderNames} */}
+                        {folderOptions}
                     </select>
                     <label htmlFor="newNote">New Note Note</label>
                     <input 
