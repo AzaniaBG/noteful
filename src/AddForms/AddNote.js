@@ -9,7 +9,6 @@ class AddNote extends React.Component {
    
     constructor(props) {
         super(props);     
-    // console.log(`route params from AddNote:`, this.props.match.params.folderId)
         this.state = {
             "name": " ",
             "content": " ",
@@ -27,7 +26,7 @@ class AddNote extends React.Component {
         })
     }
     //method gets user input for folder name
-    addFolder = (folderInput) => {
+    addFolder = (folderInput) => {  
     console.log(`folder from AddFolder is`, folderInput);
         const folderOption = folderInput
         //return the folder that matches the folder user selected
@@ -35,7 +34,6 @@ class AddNote extends React.Component {
         const folderId = folder[0].id
     console.log(`folderId is:`, folderId)
         this.setState({ "folderId": folderId})
-
     }
     //method gets user input for note content
     addContent = (content) => {
@@ -84,17 +82,13 @@ class AddNote extends React.Component {
     validateNameInput = () => {
         //get value of input and save in variable
         const name = this.state.name.trim();
-        const folder = this.state.folder;
         if(name === "" || name === " ") {
             return "Note name is required";
         }
         if(name.length <= 1 || name.length > 20) {
             return "Note name must be more than one character and no more than 20!";
         }
-        if(folder === null || folder === " ") {
-            return "Please choose a folder";
-        }
-
+        
     }
     render() {
         const nameError = this.validateNameInput();
@@ -113,8 +107,7 @@ class AddNote extends React.Component {
                         id="folder"
                         type="select" 
                         onChange={(e) => this.addFolder(e.target.value)}>
-                        <option name="None" value={null}>choose a folder</option>
-                        {/* {folderNames} */}
+                        
                         {folderOptions}
                     </select>
                     <label htmlFor="newNote">New Note Note</label>

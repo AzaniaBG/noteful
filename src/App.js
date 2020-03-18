@@ -11,7 +11,6 @@ import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
 import AddNote from '../src/AddForms/AddNote';
 import ErrorBoundary from '../src/ErrorBoundaries/ErrorBoundary';
-import PropTypes from 'prop-types';
 
 class App extends Component { 
   static defaultProps = {

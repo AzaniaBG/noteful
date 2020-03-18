@@ -2,11 +2,7 @@ import React from 'react';
 import AppContext from '../Context/AppContext';
 import config from '../config';
 import { withRouter } from 'react-router-dom';
-<<<<<<< HEAD
-import PropTypes from 'prop-types';
-=======
 import ValidationMessage from './ValidationMessage';
->>>>>>> formFolder
 
 class AddFolder extends React.Component {
     static contextType = AppContext;
@@ -25,11 +21,8 @@ class AddFolder extends React.Component {
     // console.log(`event from handleAddClick ran`, folderName);
         this.setState({
             "name": folderName,
-<<<<<<< HEAD
             "id": " ",
-=======
             "touched": true
->>>>>>> formFolder
         })
     }
     validateFolder = () => {
@@ -54,9 +47,6 @@ class AddFolder extends React.Component {
         const { name } = this.state;
         const newFolder = { name };
         
-        newFolder.propTypes = {
-            newFolder: PropTypes.object
-        }
         fetch(`${config.API_ENDPOINT}/folders`, {
             method: 'POST',
             body: JSON.stringify(newFolder),
@@ -109,6 +99,6 @@ class AddFolder extends React.Component {
         )
 
     }
-
 }
+
 export default withRouter(AddFolder)

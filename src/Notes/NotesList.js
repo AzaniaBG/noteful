@@ -32,16 +32,6 @@ class NotesList extends React.Component {
             }
         return (
             <div className="Main">
-<<<<<<< HEAD
-                <button id="addButton2">
-                    <NavLink to={"/addNote"}>
-                    Add Note
-                    </NavLink>
-                </button>
-                
-=======
-
->>>>>>> formFolder
                 {noteName} 
                 <button>
                     <NavLink to={"/addNote"}>
