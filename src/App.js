@@ -106,7 +106,7 @@ class App extends Component {
                 component={NotesList} />
               <Route exact path="/note/:id" 
                 component={Note} />
-              <Route exact path="/addNote/:folderId"
+              <Route exact path="/addNote"
                 render={({history}) => (
                   <AddNote 
                     handleAddNoteClick={() => history.push('/addNote/:folderId')} />
