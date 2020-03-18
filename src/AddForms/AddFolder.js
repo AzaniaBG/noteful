@@ -2,7 +2,11 @@ import React from 'react';
 import AppContext from '../Context/AppContext';
 import config from '../config';
 import { withRouter } from 'react-router-dom';
+<<<<<<< HEAD
 import PropTypes from 'prop-types';
+=======
+import ValidationMessage from './ValidationMessage';
+>>>>>>> formFolder
 
 class AddFolder extends React.Component {
     static contextType = AppContext;
@@ -11,6 +15,7 @@ class AddFolder extends React.Component {
         this.state = {
            "id": " ",
            "name": " ",
+           touched: false,
         }
         //this.nameInput = React.createRef();
     }
@@ -20,20 +25,29 @@ class AddFolder extends React.Component {
     // console.log(`event from handleAddClick ran`, folderName);
         this.setState({
             "name": folderName,
+<<<<<<< HEAD
             "id": " ",
+=======
+            "touched": true
+>>>>>>> formFolder
         })
     }
-    //add method to that adds user's new folder to folders already in state
-    // updateFolders = (newFolder) => {
-    //     let folders = this.context.folders;
-    // console.log(`upDateFolders context value`, folders)
-    //     //to avoid mutating state, use the spread operator to copy the folders array into a new array and add the new folder to the end of that array
-    //     this.setState({
-    //         folders: [...folders, newFolder]
-    //     })
+    validateFolder = () => {
+        console.log(`validateFolder from AddFolder ran`)
+        let input = this.state.name;
+        console.log(`input from AddFolder is`, input);
+        if(input === " " || input === "") {
+            return "Please enter a folder name";
+        }
+        if(input.length <= 1) {
+            return "Folder name must be more than one character.";
+        }
+        if(input.length > 20) {
+            return "Folder name cannot be more than 20 characters";
+        }
 
-    // }
-    //add method to process form values when submit button is clicked
+    }
+    
     handleSubmit = (event) => {
         event.preventDefault();
         //const name = this.nameInput.current.value;
@@ -77,9 +91,17 @@ class AddFolder extends React.Component {
                         onChange={(e) => this.handleAddClick(e.target.value)}
                         //ref={this.nameInput}
                         //defaultValue="new folder"
+                        aria-required="true"
                         className="AddFolder_control"  />
+                    {/* conditionally render validation error message below input */}
+                    {this.state.touched && (
+                        <ValidationMessage message={this.validateFolder()} />
+                    )}
                     <button className="addFolderButton" 
-                        onClick={(e) => this.context.updateFolders(e.target.value)}>
+                        type="submit"
+                        disabled={this.validateFolder()}
+                        // onClick={(e) => this.context.updateFolders(e.target.value)}
+                        >
                         Save Folder
                     </button>
                 </div>

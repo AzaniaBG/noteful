@@ -9,12 +9,11 @@ class AddNote extends React.Component {
    
     constructor(props) {
         super(props);     
-        const folderId = this.props.match.params.folderId;
     // console.log(`route params from AddNote:`, this.props.match.params.folderId)
         this.state = {
             "name": " ",
             "content": " ",
-            "folderId": folderId,
+            "folderId": " ",
             "value": " ",
             "touched": false,
         }
@@ -27,9 +26,20 @@ class AddNote extends React.Component {
             "name": name,
         })
     }
+    //method gets user input for folder name
+    addFolder = (folderInput) => {
+    console.log(`folder from AddFolder is`, folderInput);
+        const folderOption = folderInput
+        //return the folder that matches the folder user selected
+        const folder = this.context.folders.filter((folder) => folder.name === folderOption);
+        const folderId = folder[0].id
+    console.log(`folderId is:`, folderId)
+        this.setState({ "folderId": folderId})
+
+    }
     //method gets user input for note content
     addContent = (content) => {
-        console.log(`addContent ran`)
+        // console.log(`addContent ran`)
         this.setState({
             "touched": true,
             "content": content,
@@ -68,26 +78,45 @@ class AddNote extends React.Component {
             this.context.updateNotes(resData);
             //programmatically navigate back to home page after new note successfully saved
             this.props.history.push('/');
-        }).catch((err) => console.log(err))
-        //create method to provide validation message if applicable:
-        
+        }).catch((err) => console.log(err))        
     }
+    //create method to provide validation message if applicable:
     validateNameInput = () => {
         //get value of input and save in variable
         const name = this.state.name.trim();
-        //console.log(`name from validateName`, name)
-        if(name === "") {
+        const folder = this.state.folder;
+        if(name === "" || name === " ") {
             return "Note name is required";
+        }
+        if(name.length <= 1 || name.length > 20) {
+            return "Note name must be more than one character and no more than 20!";
+        }
+        if(folder === null || folder === " ") {
+            return "Please choose a folder";
         }
 
     }
     render() {
-        
         const nameError = this.validateNameInput();
+        // const folderNames = this.context.folders.map((folder) => <option name={folder.name} key={folder.id} id={folder.id} value={folder.name}>{folder.name}</option>)
+        const folders = this.context.folders; 
+        const folderOptions = folders.map((folder) => <option name={folder.name} value={folder.name} key={folder.id} id={folder.id}>{folder.name}</option>);
+        
+        
+        // console.log(`folderName from AddNote is`, folderNames)
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
                     <fieldset>
                     <h2>Add Note</h2>
+                    <label htmlFor="folder">Folder</label>
+                    <select
+                        id="folder"
+                        type="select" 
+                        onChange={(e) => this.addFolder(e.target.value)}>
+                        <option name="None" value={null}>choose a folder</option>
+                        {/* {folderNames} */}
+                        {folderOptions}
+                    </select>
                     <label htmlFor="newNote">New Note Note</label>
                     <input 
                         id="newNote"
@@ -95,11 +124,11 @@ class AddNote extends React.Component {
                         name="newNote"
                         aria-required="true"
                         onChange={(e) => this.addNote(e.target.value)} />
-                    <div className="validationMessage" style={{color: "red" }}>
-                        {/* {this.state.name.touched &&  { nameError }  } */}
-                        {/* {<ValidationMessage message={this.validateNameInput()} />} */}
-                        {<ValidationMessage message={nameError} />} 
-                        {/* {nameError} */}
+                    <div className="validationMessage"  >
+                        {this.state.touched && (
+                            <ValidationMessage message={nameError} />
+                        )}
+                       
                     </div>
                     <label htmlFor="noteContent">New Note Content</label>
                     <textarea 
