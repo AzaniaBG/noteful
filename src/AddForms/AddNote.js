@@ -9,22 +9,22 @@ class AddNote extends React.Component {
    
     constructor(props) {
         super(props);     
-        const folderId = this.props.match.params.folderId;
     // console.log(`route params from AddNote:`, this.props.match.params.folderId)
         this.state = {
             "name": " ",
             "content": " ",
-            "folderId": folderId,
+            "folderId": " ",
             "value": " ",
             "touched": false,
         }
     }
     
     //method gets user input for note name
-    addNote = (name) => {
+    addNote = (name, folder) => {
         this.setState({
             "touched": true,
             "name": name,
+            "folder": folder,
         })
     }
     //method gets user input for note content
@@ -68,15 +68,13 @@ class AddNote extends React.Component {
             this.context.updateNotes(resData);
             //programmatically navigate back to home page after new note successfully saved
             this.props.history.push('/');
-        }).catch((err) => console.log(err))
-        //create method to provide validation message if applicable:
-        
+        }).catch((err) => console.log(err))        
     }
+    //create method to provide validation message if applicable:
     validateNameInput = () => {
         //get value of input and save in variable
         const name = this.state.name.trim();
-        //console.log(`name from validateName`, name)
-        if(name === "") {
+        if(name === "" || name === " ") {
             return "Note name is required";
         }
         if(name.length <= 1 || name.length > 20) {
@@ -86,10 +84,20 @@ class AddNote extends React.Component {
     }
     render() {
         const nameError = this.validateNameInput();
+        const folderNames = this.context.folders.map((folder) => <option name={folder.name} key={folder.id} id={folder.id} value={folder.name}>{folder.name}</option>
+        )
+        console.log(`folderName from AddNote is`, folderNames)
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
                     <fieldset>
                     <h2>Add Note</h2>
+                    <label htmlFor="folder">Folder</label>
+                    <select
+                        id="folder"
+                        type="select" >
+                        <option name="choose a folder">choose a folder</option>
+                        {folderNames}
+                    </select>
                     <label htmlFor="newNote">New Note Note</label>
                     <input 
                         id="newNote"
