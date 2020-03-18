@@ -26,9 +26,7 @@ class AddFolder extends React.Component {
         })
     }
     validateFolder = () => {
-        console.log(`validateFolder from AddFolder ran`)
         let input = this.state.name;
-        console.log(`input from AddFolder is`, input);
         if(input === " " || input === "") {
             return "Please enter a folder name";
         }
