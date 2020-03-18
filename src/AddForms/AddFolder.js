@@ -90,7 +90,8 @@ class AddFolder extends React.Component {
                     <button className="addFolderButton" 
                         type="submit"
                         disabled={this.validateFolder()}
-                        onClick={(e) => this.context.updateFolders(e.target.value)}>
+                        // onClick={(e) => this.context.updateFolders(e.target.value)}
+                        >
                         Save Folder
                     </button>
                 </div>
