@@ -31,6 +31,12 @@ class AddFolder extends React.Component {
         if(input === " " || input === "") {
             return "Please enter a folder name";
         }
+        if(input.length <= 1) {
+            return "Folder name must be more than one character.";
+        }
+        if(input.length > 20) {
+            return "Folder name cannot be more than 20 characters";
+        }
 
     }
     
@@ -75,6 +81,7 @@ class AddFolder extends React.Component {
                         onChange={(e) => this.handleAddClick(e.target.value)}
                         //ref={this.nameInput}
                         //defaultValue="new folder"
+                        aria-required="true"
                         className="AddFolder_control"  />
                     {/* conditionally render validation error message below input */}
                     {this.state.touched && (
