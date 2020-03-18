@@ -79,6 +79,9 @@ class AddNote extends React.Component {
         if(name === "") {
             return "Note name is required";
         }
+        if(name.length <= 1 || name.length > 20) {
+            return "Note name must be more than one character and no more than 20!";
+        }
 
     }
     render() {
@@ -94,12 +97,10 @@ class AddNote extends React.Component {
                         name="newNote"
                         onChange={(e) => this.addNote(e.target.value)} />
                     <div className="validationMessage"  >
-                        {/* {this.state.name.touched &&  { nameError }  } */}
                         {this.state.touched && (
                             <ValidationMessage message={nameError} />
                         )}
-                        {/* {<ValidationMessage message={this.validateNameInput()} />} */}
-                        {/* {nameError} */}
+                       
                     </div>
                     <label htmlFor="noteContent">New Note Content</label>
                     <textarea 
