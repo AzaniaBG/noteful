@@ -51,9 +51,7 @@ class App extends Component {
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
-    // handleAddFolderClick = () => {
-    //   console.log(`handleAddFolderClick ran`)
-    // }
+    
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
       this.setState({
@@ -90,19 +88,21 @@ class App extends Component {
   {/* list folders in sidebar */}
               <section className="Sidebar">
                 <ErrorBoundary>
+      {/* show Folders List on main page (when patch exactly matches "/") */}
                   <Route exact path="/"
                     component={FoldersList}>
                   </Route>
+
                   <Route exact path="/folder/:id"
                     component={FoldersList} />
       {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
-                  
                   <Route exact path="/note/:id"
                     render={({history}) => (
                       <Folder 
                         onBackClick={() => history.goBack() }
                         /> 
                         )}/>
+      {/* show the Add Folder Component when the path exactly matches "/addFolder" */}
                   <Route exact path="/addFolder" 
                     component={AddFolder} />
                 </ErrorBoundary>

@@ -13,7 +13,9 @@ class NotesList extends React.Component {
         if(folderId === undefined || folderId === null) {
             noteName = this.context.notes.map((note) => (
                 <div key={note.id}>
+                <NavLink to={`/note/${note.id}`}>
                     <h3 key={note.id}>{note.name}</h3>
+                </NavLink>
                     <p>Modified: {note.modified}</p>
                 </div>
             ))
@@ -24,7 +26,9 @@ class NotesList extends React.Component {
             noteName = filteredNotes.map((note) => (
                 <div key={note.id}>
                     <h3 key={note.id}>
-                        <NavLink to={`/note/${note.id}`}>{note.name}</NavLink>
+                        <NavLink to={`/note/${note.id}`}>
+                            {note.name}
+                        </NavLink>
                     </h3>
                     <p>Modified: {note.modified}</p>
                 </div>
@@ -32,6 +36,7 @@ class NotesList extends React.Component {
             }
         return (
             <div className="Main">
+                
                 {noteName} 
                 <button>
                     <NavLink to={"/addNote"}>
