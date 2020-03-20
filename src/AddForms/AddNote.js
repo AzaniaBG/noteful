@@ -27,7 +27,6 @@ class AddNote extends React.Component {
     }
     //method gets user input for folder name
     addFolder = (folderInput) => {  
-    console.log(`folder from AddFolder is`, folderInput);
         const folderOption = folderInput
         //return the folder that matches the folder user selected
         const folder = this.context.folders.filter((folder) => folder.name === folderOption);
@@ -36,7 +35,6 @@ class AddNote extends React.Component {
     }
     //method gets user input for note content
     addContent = (content) => {
-        // console.log(`addContent ran`)
         this.setState({
             "touched": true,
             "content": content,
@@ -95,8 +93,6 @@ class AddNote extends React.Component {
         const folders = this.context.folders; 
         const folderOptions = folders.map((folder) => <option name={folder.name} value={folder.name} key={folder.id} id={folder.id}>{folder.name}</option>);
         
-        
-        // console.log(`folderName from AddNote is`, folderNames)
         return (
                 <form className="AddNote" onSubmit={(e) => this.handleSubmit(e)}>
                     <fieldset>
