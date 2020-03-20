@@ -32,7 +32,6 @@ class AddNote extends React.Component {
         //return the folder that matches the folder user selected
         const folder = this.context.folders.filter((folder) => folder.name === folderOption);
         const folderId = folder[0].id
-    console.log(`folderId is:`, folderId)
         this.setState({ "folderId": folderId})
     }
     //method gets user input for note content
