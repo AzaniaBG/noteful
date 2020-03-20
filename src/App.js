@@ -45,13 +45,15 @@ class App extends Component {
       }).catch(error => console.log({error}))
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
-    //********************should probably change name to "updateNotes"**********************
+    //********************should probably change name to "updateDeleted"**********************
     handleDeleteClick = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
-    
+    handleDeleteButton = (noteId) => {
+console.log(`handleDeleteButton from App's noteId is:`, noteId);
+    }
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
       this.setState({
@@ -80,6 +82,7 @@ class App extends Component {
               value={{
                 folders: this.state.folders,
                 notes: this.state.notes,
+                handleDeleteButton: this.handleDeleteButton,
                 handleDeleteClick: this.handleDeleteClick,
                 updateFolders: this.updateFolders,
                 handleAddNoteClick: this.handleAddNoteClick,
