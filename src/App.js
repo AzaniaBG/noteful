@@ -5,7 +5,6 @@ import NotesList from '../src/Notes/NotesList';
 import Note from '../src/Notes/Note';
 import FoldersList from '../src/Folders/FoldersList';
 import Folder from '../src/Folders/Folder';
-// import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
@@ -46,13 +45,25 @@ class App extends Component {
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
     //********************should probably change name to "updateDeleted"**********************
-    handleDeleteClick = (noteId) => {
+    updateAfterDelete = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
     handleDeleteButton = (noteId) => {
-console.log(`handleDeleteButton from App's noteId is:`, noteId);
+      const note = noteId;
+      fetch(`${config.API_ENDPOINT}/notes/${note}`, {
+        method: 'DELETE',
+        headers: {
+            "content-type": "application/json"
+        },
+        }).then(res => {
+          if(!res.ok) {
+            return res.json().then(e => Promise.reject(e));
+          }
+          return res.json();
+        }).then(() => this.updateAfterDelete(note)).catch(error => console.log(error));
+// console.log(`handleDeleteButton from App's note is:`, note);
     }
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
@@ -83,7 +94,7 @@ console.log(`handleDeleteButton from App's noteId is:`, noteId);
                 folders: this.state.folders,
                 notes: this.state.notes,
                 handleDeleteButton: this.handleDeleteButton,
-                handleDeleteClick: this.handleDeleteClick,
+                updateAfterDelete: this.updateAfterDelete,
                 updateFolders: this.updateFolders,
                 handleAddNoteClick: this.handleAddNoteClick,
                 updateNotes: this.updateNotes,

@@ -11,7 +11,7 @@ class Note extends React.Component {
     handleDeleteButton = (e) => {
         e.preventDefault();
         const noteId = this.props.match.params.id;
-    // console.log(`handleDeleteButton from Note.js ran; noteId is:`, noteId);
+    console.log(`handleDeleteButton from Note.js ran; noteId is:`, noteId);
         fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
             method: 'DELETE',
             headers: {
@@ -22,7 +22,7 @@ class Note extends React.Component {
                 return res.json().then(e => Promise.reject(e))
             }
             return res.json();
-        }).then(() => this.context.handleDeleteClick(noteId))
+        }).then(() => this.context.updateAfterDelete(noteId))
         .then(this.props.history.push('/'))
         .catch(error => console.log(error));
     }
