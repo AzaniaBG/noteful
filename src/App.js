@@ -63,7 +63,6 @@ class App extends Component {
           }
           return res.json();
         }).then(() => this.updateAfterDelete(note)).catch(error => console.log(error));
-// console.log(`handleDeleteButton from App's note is:`, note);
     }
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
