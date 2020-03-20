@@ -44,7 +44,6 @@ class App extends Component {
       }).catch(error => console.log({error}))
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
-    //********************should probably change name to "updateDeleted"**********************
     updateAfterDelete = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
