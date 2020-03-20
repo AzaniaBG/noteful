@@ -5,7 +5,6 @@ import NotesList from '../src/Notes/NotesList';
 import Note from '../src/Notes/Note';
 import FoldersList from '../src/Folders/FoldersList';
 import Folder from '../src/Folders/Folder';
-// import DummyStore from './DummyStore.js';
 import AppContext from './Context/AppContext';
 import config from '../src/config';
 import AddFolder from '../src/AddForms/AddFolder';
@@ -45,13 +44,26 @@ class App extends Component {
       }).catch(error => console.log({error}))
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
-    //********************should probably change name to "updateNotes"**********************
-    handleDeleteClick = (noteId) => {
+    //********************should probably change name to "updateDeleted"**********************
+    updateAfterDelete = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
       })
     }
-    
+    handleDeleteButton = (noteId) => {
+      const note = noteId;
+      fetch(`${config.API_ENDPOINT}/notes/${note}`, {
+        method: 'DELETE',
+        headers: {
+            "content-type": "application/json"
+        },
+        }).then(res => {
+          if(!res.ok) {
+            return res.json().then(e => Promise.reject(e));
+          }
+          return res.json();
+        }).then(() => this.updateAfterDelete(note)).catch(error => console.log(error));
+    }
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
       this.setState({
@@ -80,7 +92,8 @@ class App extends Component {
               value={{
                 folders: this.state.folders,
                 notes: this.state.notes,
-                handleDeleteClick: this.handleDeleteClick,
+                handleDeleteButton: this.handleDeleteButton,
+                updateAfterDelete: this.updateAfterDelete,
                 updateFolders: this.updateFolders,
                 handleAddNoteClick: this.handleAddNoteClick,
                 updateNotes: this.updateNotes,

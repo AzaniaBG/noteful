@@ -5,7 +5,7 @@ const AppContext = React.createContext({
     notes: [],
     folders: [],
     onBackClick: () => {},
-    handleDeleteClick: () => {},
+    updateAfterDelete: () => {},
     handleDeleteButton: () => {},
     handleAddFolderClick: () => {},
     updateFolders: () => {}, 

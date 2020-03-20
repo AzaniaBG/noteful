@@ -17,6 +17,9 @@ class NotesList extends React.Component {
                     <h3 key={note.id}>{note.name}</h3>
                 </NavLink>
                     <p>Modified: {note.modified}</p>
+                    <button id="deleteNoteButton" onClick={() => this.context.handleDeleteButton(note.id)}>
+                        Delete Note
+                    </button> 
                 </div>
             ))
         } else {
@@ -36,8 +39,7 @@ class NotesList extends React.Component {
             }
         return (
             <div className="Main">
-                
-                {noteName} 
+                {noteName}
                 <button>
                     <NavLink to={"/addNote"}>
                         Add Note
@@ -51,25 +53,3 @@ NotesList.propTypes = {
     NotesList: PropTypes.arrayOf(PropTypes.object)
 }
 export default withRouter(NotesList)
-
-//Q&A SESSION:
-// class NotesList extends React.Component {
-    
-//     render() {
-//         console.log(this.props)
-//         const folderId = this.props.match.params.id
-//         const notes = this.props.notes.filter((note) => note.folderId === folderId)
-//         return (
-//             <div>
-//                 <h3>Notes</h3>
-//                 {notes.map((note) => (
-//                     <div key={note.id}>
-//                         {note.name}
-                        
-//                     </div>
-//                 ))}
-//             </div>
-//         )
-//     }
-// }
-// export default withRouter(NotesList)
