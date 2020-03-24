@@ -108,12 +108,13 @@ class App extends Component {
                   <Route exact path="/folder/:id"
                     component={FoldersList} />
       {/* when specific folder selected, show folder highlighted in sidebar and only show notes from that folder */}          
-                  <Route exact path="/note/:id"
+                  <Route exact path="/note/:noteid"
                     render={({history}) => (
                       <Folder 
                         onBackClick={() => history.goBack() }
                         /> 
                         )}/>
+          
       {/* show the Add Folder Component when the path exactly matches "/addFolder" */}
                   <Route exact path="/addFolder" 
                     component={AddFolder} />
