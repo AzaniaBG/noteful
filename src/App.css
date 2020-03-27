@@ -24,3 +24,6 @@
 .errorMessage {
   color: red;
 }
+.Notes {
+  list-style: none;
+}
