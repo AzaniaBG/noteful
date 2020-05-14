@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
 
 class FoldersList extends React.Component {
 
@@ -11,22 +12,22 @@ class FoldersList extends React.Component {
         const folderPath = this.props.match.params.id;
         const folders = this.context.folders.map((folder) => (
                 
-                <h3 key={folder.id} id={folder.id} style={folderPath === folder.id ? {backgroundColor: "lightblue"} : {}}>
-                    <NavLink to={`/folder/${folder.id}`}>
+                <h3 key={folder.id} id={folder.id} style={folderPath === folder.id ? {backgroundColor: "lightblue"} : {}} className="Folder">
+                    <NavLink to={`/folder/${folder.id}`} >
                     {folder.name}
                     </NavLink>
                 </h3>
         ))
         return (
             
-            <div>
+            <React.Fragment>
                 {folders}
-                <button id="addFolder" >
+                <button id="addFolder" type="button">
                     <NavLink to={"/addFolder"}>
                     Add Folder
                     </NavLink>
                 </button>
-            </div>
+            </React.Fragment>
         )
     }
 }
