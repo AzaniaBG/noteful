@@ -12,8 +12,9 @@ class AddNote extends React.Component {
         this.state = {
             "name": " ",
             "content": " ",
-            "folderId": " ",
+            "folderId": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
             "value": " ",
+            "modified": " ",
             "touched": false,
         }
     }
@@ -35,18 +36,21 @@ class AddNote extends React.Component {
     }
     //method gets user input for note content
     addContent = (content) => {
+        const date = new Date();
         this.setState({
             "touched": true,
             "content": content,
+            "modified": `${date}`,
         })
+        console.log(`date is ${date}`)
     }
     //method handles "save" button--constructs object from state
     handleSubmit = (e) => {
         //prevent default submission triggered by onSubmit handler
         e.preventDefault();
         //destruct state and save in a variable to be passed in the REQUEST body
-        const { name, folderId, content } = this.state;
-        const newNote = { name, folderId, content };
+        const { name, folderId, content, modified } = this.state;
+        const newNote = { name, folderId, content, modified };
         //send POST REQUEST to notes server endpoint to add new note from user
         fetch(`${config.API_ENDPOINT}/notes`, {
             method: 'POST',
@@ -65,7 +69,7 @@ class AddNote extends React.Component {
             this.setState({
                 "name": " ",
                 "content": " ",
-                "folderId": " ",
+                "folderId": "b0715efe-ffaf-11e8-8eb2-f2801f1b9fd1",
                 "value": " ",
                 "touched": false,
             });

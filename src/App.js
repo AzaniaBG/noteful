@@ -47,7 +47,7 @@ class App extends Component {
     updateAfterDelete = (noteId) => {
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
-      })
+      });
     }
     handleDeleteButton = (noteId) => {
       const note = noteId;

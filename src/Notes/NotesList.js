@@ -2,9 +2,11 @@ import React from 'react';
 import { withRouter, NavLink } from 'react-router-dom';
 import AppContext from '../Context/AppContext';
 import PropTypes from 'prop-types';
+import { Fragment } from 'react';
+import formatDate from '../Date';
+
 
 class NotesList extends React.Component {
-    
 
     static contextType = AppContext;
     render() {     
@@ -14,11 +16,11 @@ class NotesList extends React.Component {
     //console.log(`folderId from NotesList is ${folderId}`);
         if(folderId === undefined || folderId === null) {
             noteName = this.context.notes.map((note) => (
-                <li key={note.id}>
+                <li key={note.id} className="Notes">
                 <NavLink to={`/note/${note.id}`}>
                     <h3 key={note.id}>{note.name}</h3>
                 </NavLink>
-                    <p>Modified: {note.modified}</p>
+                    <p>Modified: {formatDate(note.modified)}</p>
                     <button id="deleteNoteButton" onClick={() => this.context.handleDeleteButton(note.id)}>
                         Delete Note
                     </button> 
@@ -34,21 +36,25 @@ class NotesList extends React.Component {
                     return note.folderId === folderId;
                 });
             noteName = filteredNotes.map((note) => (
-                <div key={note.id}>
-                    <li key={note.id}>
+                    <li key={note.id} className="Notes">
                         <NavLink to={`/note/${note.id}`}>
                             {note.name}
                         </NavLink>
+                        <p>Date Modified: {formatDate(note.modified)}</p>
+                        <button id="deleteNoteButton" onClick={() => this.context.handleDeleteButton(note.id)}>
+                        Delete Note
+                        </button> 
                     </li>
-                    <p>Modified: {note.modified}</p>
-                </div>
+                    
                 ))
             }
+            console.log(`noteName from NotesList is`, noteName)
         return (
-            <ul className="Notes">
+           
+            <ul>
                 {noteName}
-                <button>
-                    <NavLink to={"/addNote"}>
+                <button className="addNoteButton" type="submit">
+                    <NavLink to={"/addNote"} >
                         Add Note
                     </NavLink>
                 </button>

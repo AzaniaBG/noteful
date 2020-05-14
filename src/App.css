@@ -2,21 +2,45 @@
 * {
   box-sizing: border-box
 }
-.Sidebar {
-  display: inline-block;
-  width: 20%;
-  margin: 0 10px;
-  
-  
-}
-.Main {
-  float: right;
-  /* display: inline-block; */
-  width: 75%;
-  /* margin: 0 auto; */
+.App {
+  display: grid;
+  grid-template-areas: "sidebar header" "sidebar main";
+  grid-template-columns: 1fr 2.3fr;
+  grid-template-rows: 120px 1fr;
+  min-height: 100vh;
 }
 .App-header {
   text-align: center;
+  grid-area: header;
+  padding-left: 16px;
+  padding-top: 32px;
+}
+.Sidebar {
+  grid-area: sidebar;
+  height: 100vh;
+  overflow: auto;
+  padding: 15px 15px;
+  margin: 10px 10px;
+}
+.Main {
+  grid-area: main;
+  height: calc(100vh - 120px);
+  overflow: auto;
+}
+ul {
+  display: flex;
+  flex-flow: column wrap;
+}
+li {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.Notes h3, .Notes a {
+  width: 100%;
+}
+.Notes button {
+  flex: 0 1 auto;
+  width: 25%;
 }
 .highlighted {
   background-color: lightskyblue;
@@ -26,4 +50,41 @@
 }
 .Notes {
   list-style: none;
+  border: black solid 1px;
+  padding: 10px 10px;
+}
+.Folder {
+  list-style: none;
+  text-align: center;
+  border: black solid 1px;
+  padding: 5px 5px;
+}
+button[type="button"] {
+  text-align: center;
+  border: black solid 1px;
+  padding: 5px 5px;
+  width: 100%;
+}
+.addNoteButton button[type="button"] {
+  border: black solid 1px;
+  width: 25%;
+}
+@media only screen and (min-width: 600px) {
+  
+  li {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .Notes h3 {
+    flex: 1 0 auto;
+    width: 100%;
+  }
+  .Notes p {
+    flex: 0 1 auto;
+    width: 70%;
+  }
+  .Notes button {
+    flex: 0 1 auto;
+    width: 20%;
+  }
 }
