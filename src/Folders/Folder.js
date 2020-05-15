@@ -7,15 +7,16 @@ class Folder extends React.Component {
 
     static contextType = AppContext;
     render() {
-
         const routeId = this.props.match.params.noteid;
         const folderId = this.context.notes.filter((note) => note.id === routeId)
             .map((note) => note.folderId);
-console.log(`folderId:`, folderId);
+
+// console.log(`folderId:`, folderId);
         const folder = this.context.folders.filter((folder) =>folder.id === folderId[0]);
-console.log(`folder is`, folder)
+// console.log(`folder is`, folder)
         const folderName = folder[0].name;
-console.log(`folderName:`, folderName);
+// console.log(`folderName:`, folderName);
+
 
         // const folderId = this.context.notes.filter((note) => note.id === routeId).map((note) => note.folderId);
         // const folderName = this.context.folders.filter((folder) => folder.id === folderId).map((folder) => folder.name);

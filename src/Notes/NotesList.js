@@ -48,7 +48,6 @@ class NotesList extends React.Component {
                     
                 ))
             }
-            console.log(`noteName from NotesList is`, noteName)
         return (
            
             <ul>

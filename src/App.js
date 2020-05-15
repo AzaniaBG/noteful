@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import './App.css';
 import { Route, NavLink } from 'react-router-dom';
 import NotesList from '../src/Notes/NotesList';
@@ -45,9 +46,11 @@ class App extends Component {
     }
     //create a method that updates folders state when a button in a nested component is clicked (updater function)
     updateAfterDelete = (noteId) => {
+      
       this.setState({
         notes: this.state.notes.filter((note) => note.id !== noteId)
       });
+      
     }
     handleDeleteButton = (noteId) => {
       const note = noteId;
@@ -61,7 +64,9 @@ class App extends Component {
             return res.json().then(e => Promise.reject(e));
           }
           return res.json();
-        }).then(() => this.updateAfterDelete(note)).catch(error => console.log(error));
+        }).then(({history}) => this.props.history.push('/'))
+        .then(() => this.updateAfterDelete(note))
+        .catch(error => console.log(error));
     }
     updateFolders = (newFolder) => {
       let folders = this.state.folders;
@@ -145,4 +150,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
