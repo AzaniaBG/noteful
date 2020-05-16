@@ -25,5 +25,5 @@ describe(`NotesList component`, () => {
     it('renders an empty array by default', () => {
         const wrapper = shallow(<NotesList />);
         expect(wrapper).toMatchSnapshot();
-    })
+    });
 })
